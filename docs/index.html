@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CAD Viewer</title>
+    <script type="module" crossorigin src="./assets/index-CAfMiRQz.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-D3QiqMba.css">
+  </head>
+  <body>
+    <div id="app">
+      <header id="topbar">
+        <div class="brand">
+          <span class="brand-mark">&#9670;</span>
+          <span class="brand-name">CAD Viewer</span>
+          <span class="brand-sub">open formats, local only</span>
+        </div>
+        <div class="toolbar">
+          <button id="btn-open" type="button" title="Open a file">Open file</button>
+          <button id="btn-fit" type="button" title="Fit model to view">Fit to view</button>
+          <button id="btn-wire" type="button" title="Toggle wireframe" aria-pressed="false">Wireframe</button>
+          <button id="btn-grid" type="button" title="Toggle grid" aria-pressed="true">Grid</button>
+          <label class="units-label" title="Display units — mesh formats carry no unit, assumed mm">
+            Units
+            <select id="sel-units">
+              <option value="mm" selected>mm</option>
+              <option value="cm">cm</option>
+              <option value="in">inch</option>
+            </select>
+          </label>
+          <label class="units-label" title="Tessellation detail for STEP / IGES / BREP — finer means more triangles; changing it re-parses the open B-rep file">
+            Detail
+            <select id="sel-deflection">
+              <option value="coarse">Coarse</option>
+              <option value="medium" selected>Medium</option>
+              <option value="fine">Fine</option>
+            </select>
+          </label>
+          <button id="btn-measure" type="button" title="Measure: click two points on the model" aria-pressed="false">Measure</button>
+          <button id="btn-section" type="button" title="Section: cut the model with a plane" aria-pressed="false">Section</button>
+          <button id="btn-clear" type="button" title="Clear the model">Clear</button>
+        </div>
+      </header>
+
+      <main id="main">
+        <aside id="sidebar">
+          <section class="panel" id="panel-file">
+            <h2>File</h2>
+            <div id="file-info" class="muted">No file loaded.</div>
+          </section>
+          <section class="panel" id="panel-parts">
+            <h2>Parts <span id="part-count" class="muted"></span></h2>
+            <ul id="part-list" class="part-list"></ul>
+            <div id="parts-empty" class="muted">Load a model to see its parts.</div>
+          </section>
+          <section class="panel" id="panel-section">
+            <h2>Section</h2>
+            <div class="ctl-row">
+              <label class="units-label" title="Axis of the section plane">
+                Axis
+                <select id="sel-section-axis" disabled>
+                  <option value="x" selected>X</option>
+                  <option value="y">Y</option>
+                  <option value="z">Z</option>
+                </select>
+              </label>
+              <button id="btn-section-flip" type="button" title="Flip which side of the plane is kept" disabled>Flip</button>
+            </div>
+            <div class="ctl-row">
+              <input id="rng-section" type="range" disabled />
+            </div>
+            <div id="section-info" class="muted small">Section off — load a model, then press Section in the toolbar.</div>
+            <p class="muted small">Mesh-level clipping: the cut is drawn from the tessellated triangles, not the exact CAD surfaces.</p>
+          </section>
+          <section class="panel" id="panel-measure">
+            <h2>Measure</h2>
+            <div id="measure-info" class="muted">Measure off — enable it in the toolbar, then click two points on the model.</div>
+            <div class="ctl-row">
+              <button id="btn-measure-clear" type="button" disabled>Clear measurement</button>
+            </div>
+            <p class="muted small">Distances are measured on the tessellated mesh, not the exact CAD surfaces.</p>
+          </section>
+          <section class="panel" id="panel-formats">
+            <h2>Supported in this build</h2>
+            <ul class="fmt-list">
+              <li>STL <span class="muted">(binary + ASCII)</span></li>
+              <li>OBJ <span class="muted">(+ MTL if supplied)</span></li>
+              <li>glTF / GLB <span class="muted">(incl. Draco)</span></li>
+              <li>PLY</li>
+              <li>AMF</li>
+              <li>STEP <span class="muted">(AP203 / 214 / 242)</span></li>
+              <li>IGES</li>
+              <li>BREP</li>
+            </ul>
+            <p class="muted small">
+              Proprietary formats (JT, SolidWorks, CATIA, NX, Inventor,
+              Creo, DWG, Parasolid, ACIS, FBX) are not supported — export
+              STEP from your CAD system and open that instead. STEP, IGES
+              and BREP are parsed by OCCT (7.6.1) in the browser; the WASM
+              (~8 MB) downloads only when a B-rep file is opened.
+            </p>
+          </section>
+        </aside>
+
+        <section id="viewport-wrap">
+          <div id="viewport"></div>
+          <div id="empty-state">
+            <div class="empty-title">Drop a CAD file here</div>
+            <div class="empty-sub">or use <b>Open file</b> above — STL, OBJ, glTF/GLB, PLY, AMF, STEP, IGES, BREP</div>
+            <div class="empty-sub muted">Your file never leaves this machine. Nothing is uploaded.</div>
+          </div>
+          <div id="drop-overlay" hidden>Drop to open</div>
+          <div id="measure-label" hidden></div>
+          <div id="toast" hidden></div>
+        </section>
+      </main>
+
+      <footer id="statusbar">
+        <span id="status-text">Ready.</span>
+        <span id="status-stats" class="muted"></span>
+      </footer>
+    </div>
+    <input id="file-input" type="file" multiple hidden />
+  </body>
+</html>
