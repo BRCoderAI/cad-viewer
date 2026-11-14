@@ -1,0 +1,6 @@
+# companion material for the CAD Viewer OBJ test
+newmtl ServoGrey
+Ka 0.2 0.2 0.2
+Kd 0.56 0.64 0.75
+Ks 0.1 0.1 0.1
+Ns 20.0
