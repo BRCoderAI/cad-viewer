@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CAD Viewer</title>
-    <script type="module" crossorigin src="./assets/index-CSxz0Glf.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-f_m0zIhL.css">
+    <script type="module" crossorigin src="./assets/index-7OOYwz2F.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Bm4g5umO.css">
   </head>
   <body>
     <div id="app">
@@ -75,8 +75,11 @@
           <section class="panel" id="panel-measure">
             <h2>Measure</h2>
             <div id="measure-info" class="muted">Measure off — enable it in the toolbar, then click two points on the model.</div>
+            <ul id="measure-history-list" class="measure-history"></ul>
+            <div id="measure-history-empty" class="muted small">No measurements yet — completed measurements appear here.</div>
             <div class="ctl-row">
-              <button id="btn-measure-clear" type="button" disabled>Clear measurement</button>
+              <button id="btn-measure-clear" type="button" disabled>Clear active measurement</button>
+              <button id="btn-measure-clear-all" type="button" disabled>Clear all measurements</button>
             </div>
             <p class="muted small">Distances are measured on the tessellated mesh, not the exact CAD surfaces.</p>
           </section>
