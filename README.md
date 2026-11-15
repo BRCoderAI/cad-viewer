@@ -1,5 +1,8 @@
 # CAD Viewer
 
+**Live demo:** https://brcoderai.github.io/cad-viewer/ — drop a STEP, IGES,
+BREP, STL, OBJ, glTF, PLY or AMF file; nothing leaves your machine.
+
 A browser-based viewer for open CAD and 3D formats. Files are read in
 the browser and never leave the machine — no upload, no server, no CAD
 licence.
