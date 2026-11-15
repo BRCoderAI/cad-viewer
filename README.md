@@ -51,6 +51,13 @@ system and open that instead.
   downloaded only when the first B-rep file is opened, never on first
   page load. The Detail control (Coarse / Medium / Fine) sets the
   tessellation deflection and re-parses the open B-rep file on change.
+- **Load progress (B-rep only):** opening a STEP / IGES / BREP file shows a
+  loading overlay with the real stage — Loading OCCT, Parsing, Converting
+  meshes, Building model — plus elapsed seconds and a Cancel button.
+  There is no percentage: OCCT parses in one synchronous call inside the
+  worker, so a percent would be made up. Cancel terminates the worker
+  and leaves any previously loaded model in place; the next load starts
+  a fresh worker. Mesh loads are fast and show no overlay.
 - **Section:** the Section button cuts the model with a clipping plane.
   Axis (X / Y / Z), offset slider in mm across the model bbox, and Flip
   choose which side is kept. The cut is mesh-level clipping of the
