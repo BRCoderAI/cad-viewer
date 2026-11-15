@@ -70,9 +70,17 @@ system and open that instead.
   it. Distances are measured on the tessellated mesh, not the exact CAD
   surfaces (see SCOPE.md §5). The file panel also shows the model
   dimensions (X × Y × Z) in mm.
+- **Measurement history:** every completed measurement is kept in a list
+  in the Measure panel — distance in the selected units plus both point
+  coordinates — with a per-entry delete button. "Clear active
+  measurement" removes only the measurement on screen; "Clear all
+  measurements" empties the whole list. The history is cleared with the
+  model and does not survive a page reload.
 - See [SCOPE.md](SCOPE.md) for the full format matrix, licensing, and
   milestones, and [BUILD_M0M1.md](BUILD_M0M1.md) / [BUILD_M2.md](BUILD_M2.md)
-  / [BUILD_SECTION_MEASURE.md](BUILD_SECTION_MEASURE.md) for the build
+  / [BUILD_SECTION_MEASURE.md](BUILD_SECTION_MEASURE.md) /
+  [BUILD_V11_PROGRESS.md](BUILD_V11_PROGRESS.md) /
+  [BUILD_V11_MEASURE_HISTORY.md](BUILD_V11_MEASURE_HISTORY.md) for the build
   and test reports.
 
 ## Licence
