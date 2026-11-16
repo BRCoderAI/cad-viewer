@@ -61,8 +61,11 @@ system and open that instead.
 - **Section:** the Section button cuts the model with a clipping plane.
   Axis (X / Y / Z), offset slider in mm across the model bbox, and Flip
   choose which side is kept. The cut is mesh-level clipping of the
-  tessellated triangles — the section is not capped, so a cut solid
-  shows its hollow interior. Works on every format, including B-rep.
+  tessellated triangles, and the cut face is capped with a filled orange
+  face (stencil-buffer caps), so a cut solid reads as solid instead of
+  showing its hollow interior. Works on every format, including B-rep.
+  Caps need closed solids — an open shell (some IGES files) may cap
+  incorrectly.
 - **Measure:** the Measure button turns clicks into picks. Click two
   points on the model and the distance shows in mm (or the selected
   units) as a line with markers and a label, plus both point coordinates
