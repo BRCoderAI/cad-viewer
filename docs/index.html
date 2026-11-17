@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CAD Viewer</title>
-    <script type="module" crossorigin src="./assets/index-C2yUaHnZ.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Bm4g5umO.css">
+    <script type="module" crossorigin src="./assets/index-y-0y15g6.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Nl9jZz3i.css">
   </head>
   <body>
     <div id="app">
@@ -82,6 +82,40 @@
               <button id="btn-measure-clear-all" type="button" disabled>Clear all measurements</button>
             </div>
             <p class="muted small">Distances are measured on the tessellated mesh, not the exact CAD surfaces.</p>
+          </section>
+          <section class="panel" id="panel-analysis">
+            <h2>Design check</h2>
+            <div id="analysis-status" class="muted small">Load a model to run the on-device design check.</div>
+            <div id="analysis-controls" hidden>
+              <div class="ctl-row">
+                <label class="units-label" title="Material for the mass estimate — density × mesh volume">
+                  Material
+                  <select id="sel-analysis-material">
+                    <option value="aluminium" selected>Aluminium · 2.70</option>
+                    <option value="steel">Steel · 7.85</option>
+                    <option value="pla">PLA · 1.24</option>
+                    <option value="abs">ABS · 1.04</option>
+                    <option value="custom">Custom…</option>
+                  </select>
+                </label>
+                <input id="inp-analysis-density" type="number" value="2.70" step="0.01" min="0.01" title="Custom density, g/cm³" hidden />
+              </div>
+              <div class="ctl-row">
+                <label class="units-label" title="Walls sampled thinner than this are flagged">
+                  Min. wall (mm)
+                  <input id="inp-analysis-wall" type="number" value="1.0" step="0.1" min="0.1" />
+                </label>
+                <label class="units-label" title="Holes smaller than this diameter are flagged">
+                  Min. hole Ø (mm)
+                  <input id="inp-analysis-hole" type="number" value="1.0" step="0.1" min="0.1" />
+                </label>
+              </div>
+              <div class="ctl-row">
+                <button id="btn-analysis-rerun" type="button" title="Recompute the design check from the current meshes">Re-run analysis</button>
+              </div>
+            </div>
+            <div id="analysis-results"></div>
+            <p class="muted small">All numbers are computed on-device from the tessellated mesh — volume from the triangle sum, holes from circular rim loops, walls from sampled rays. Mesh measurements are approximate: exact B-rep measurement needs the CAD kernel, and the tessellation detail sets the accuracy. No file is uploaded, no network call is made, no AI is involved.</p>
           </section>
           <section class="panel" id="panel-formats">
             <h2>Supported in this build</h2>
