@@ -79,11 +79,34 @@ system and open that instead.
   measurement" removes only the measurement on screen; "Clear all
   measurements" empties the whole list. The history is cleared with the
   model and does not survive a page reload.
+- **Design check:** after a model loads, the Design check panel analyses
+  the tessellated mesh entirely on-device — no upload, no network, no
+  AI. It reports part count, total volume (signed-tetrahedron sum over
+  the mesh) and mass for a chosen material (Aluminium 2.70, Steel 7.85,
+  PLA 1.24, ABS 1.04 g/cm³, or a custom density), the largest part by
+  volume, circular holes (diameter and count, found from circular rim
+  loops on the mesh), the thinnest wall sampled (ray-cast through the
+  mesh), open shells, and DFM warnings — small holes under a threshold,
+  walls under a threshold, very small parts, long-and-thin parts,
+  unsewn / non-manifold triangulations — plus a plain-language summary
+  built from the numbers. The wall and hole thresholds are adjustable
+  (both default 1.0 mm); a Re-run button recomputes from the current
+  meshes, and the analysis re-runs automatically after a Detail change.
+  Every number is labelled as mesh-computed and is approximate:
+  volume is exact only for closed, consistently oriented meshes; holes
+  are found from rim loops, so a hole whose rim is broken into arcs
+  under ~200° (a laminated mounting hole, an unsewn IGES seam) can be
+  missed; the thinnest wall is sampled, not exhaustive, and depends on
+  tessellation density. Exact B-rep measurement needs the kernel — the
+  panel never claims it. Results are exposed on `window.__viewer` as
+  `getState().analysis` for headless checks.
 - See [SCOPE.md](SCOPE.md) for the full format matrix, licensing, and
   milestones, and [BUILD_M0M1.md](BUILD_M0M1.md) / [BUILD_M2.md](BUILD_M2.md)
   / [BUILD_SECTION_MEASURE.md](BUILD_SECTION_MEASURE.md) /
   [BUILD_V11_PROGRESS.md](BUILD_V11_PROGRESS.md) /
-  [BUILD_V11_MEASURE_HISTORY.md](BUILD_V11_MEASURE_HISTORY.md) for the build
+  [BUILD_V11_MEASURE_HISTORY.md](BUILD_V11_MEASURE_HISTORY.md) /
+  [BUILD_V11_SECTION_CAPPING.md](BUILD_V11_SECTION_CAPPING.md) /
+  [BUILD_AI_DESIGN_CHECK.md](BUILD_AI_DESIGN_CHECK.md) for the build
   and test reports.
 
 ## Licence
