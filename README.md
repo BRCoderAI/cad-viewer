@@ -33,10 +33,13 @@ Vercel).
 | STEP (AP203 / AP214 / AP242) | Supported — parsed by OCCT 7.6.1 in WASM |
 | IGES | Supported — parsed by OCCT 7.6.1 in WASM |
 | BREP | Supported — parsed by OCCT 7.6.1 in WASM |
+| Gerber RS-274X | Supported — opens as a 2D layer stack (copper, mask, silk, outline) |
+| Excellon drill | Supported — drill hits as a layer, with positions and tool sizes |
 
 Proprietary formats (JT, SolidWorks, CATIA, NX, Inventor, Creo, DWG,
 Parasolid, ACIS, FBX) are not supported — export STEP from your CAD
-system and open that instead.
+system and open that instead. KiCad board files (.kicad_pcb) are not
+supported — export Gerber + drill from KiCad and open those instead.
 
 ## Notes
 
@@ -100,13 +103,38 @@ system and open that instead.
   tessellation density. Exact B-rep measurement needs the kernel — the
   panel never claims it. Results are exposed on `window.__viewer` as
   `getState().analysis` for headless checks.
+- **ECAD (Gerber + Excellon drill):** drop Gerber RS-274X files
+  (.GTL/.GBL/.GTS/.GBS/.GTO/.GBO/.GKO, .gbr) together with an Excellon
+  drill file (.drl/.xln/.txt) and the board opens as a 2D layer stack —
+  copper, solder mask, silkscreen, board outline, drill hits — with
+  per-layer show/hide in the Parts list, board outline, and pan/zoom
+  through the usual controls. Layer type is inferred from the filename
+  (.GTL = top copper, .GTS = top mask, .GTO = top silk, .GKO = outline,
+  and so on); a Gerber or drill file also opens on its own. Parsing and
+  rendering use the vendored tracespace v4 libraries
+  (`src/vendor/tracespace/`, MIT — gerber-parser 4.2.7, gerber-plotter
+  4.2.8, gerber-to-svg 4.2.8), with no CDN dependency. Layers are drawn
+  as exported — a mask layer shows its openings, drill hits are the tool
+  positions — and the board size is the outline layer when one was
+  opened, otherwise the union of the layers. Limits: layers are
+  rasterised (up to ~120 px/mm, capped at 4096 px on the long side), so
+  extreme zoom softens instead of staying vector-crisp; a layer with no
+  image at all is skipped with an error; block-repeat drill hits are
+  expanded from the plotter stream, but clear-polarity rendering is
+  only as good as the SVG renderer and has no dedicated fixture; the
+  Design check does not run on a 2D board. KiCad board files
+  (.kicad_pcb) are out of scope — export Gerber + drill and open those.
+  Results are exposed on `window.__viewer` as `getState().ecad` for
+  headless checks, with `__viewer.ecadSample(layer, xMm, yMm)` for
+  pixel-level verification.
 - See [SCOPE.md](SCOPE.md) for the full format matrix, licensing, and
   milestones, and [BUILD_M0M1.md](BUILD_M0M1.md) / [BUILD_M2.md](BUILD_M2.md)
   / [BUILD_SECTION_MEASURE.md](BUILD_SECTION_MEASURE.md) /
   [BUILD_V11_PROGRESS.md](BUILD_V11_PROGRESS.md) /
   [BUILD_V11_MEASURE_HISTORY.md](BUILD_V11_MEASURE_HISTORY.md) /
   [BUILD_V11_SECTION_CAPPING.md](BUILD_V11_SECTION_CAPPING.md) /
-  [BUILD_AI_DESIGN_CHECK.md](BUILD_AI_DESIGN_CHECK.md) for the build
+  [BUILD_AI_DESIGN_CHECK.md](BUILD_AI_DESIGN_CHECK.md) /
+  [BUILD_ECAD_GERBER.md](BUILD_ECAD_GERBER.md) for the build
   and test reports.
 
 ## Licence
