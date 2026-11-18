@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CAD Viewer</title>
-    <script type="module" crossorigin src="./assets/index-y-0y15g6.js"></script>
+    <script type="module" crossorigin src="./assets/index-A7XCuZLD.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-Nl9jZz3i.css">
   </head>
   <body>
@@ -128,6 +128,8 @@
               <li>STEP <span class="muted">(AP203 / 214 / 242)</span></li>
               <li>IGES</li>
               <li>BREP</li>
+              <li>Gerber RS-274X <span class="muted">(.GTL/.GBL/.GTS/.GBS/.GTO/.GBO/.GKO, .gbr — opens as a 2D layer stack)</span></li>
+              <li>Excellon drill <span class="muted">(.drl/.xln/.txt — drill hits as a layer)</span></li>
             </ul>
             <p class="muted small">
               Proprietary formats (JT, SolidWorks, CATIA, NX, Inventor,
@@ -143,7 +145,7 @@
           <div id="viewport"></div>
           <div id="empty-state">
             <div class="empty-title">Drop a CAD file here</div>
-            <div class="empty-sub">or use <b>Open file</b> above — STL, OBJ, glTF/GLB, PLY, AMF, STEP, IGES, BREP</div>
+            <div class="empty-sub">or use <b>Open file</b> above — STL, OBJ, glTF/GLB, PLY, AMF, STEP, IGES, BREP, Gerber, Excellon drill</div>
             <div class="empty-sub muted">Your file never leaves this machine. Nothing is uploaded.</div>
           </div>
           <div id="drop-overlay" hidden>Drop to open</div>
